@@ -1,6 +1,6 @@
 const cellArray = []
-let cellWidth = 10
-let cellHeight = 10
+let cellWidth = 20
+let cellHeight = 20
 
 function start() {
     createCellsDataStructure()
@@ -16,17 +16,18 @@ function createCellsDataStructure() {
 }
 
 function cellsPropagation() {
+    let idBox = []
     
     for (let i = 0; i < (cellWidth * cellHeight); i++) {
-        console.log(i)
         if (cellArray[i] == 1) {
-            cellArray[i] = 0
-            cellArray[i-cellWidth] = 1
-            console.log("***"+cellArray[i+cellWidth])
-            //console.log(cellArray)
-            nextPosition(i)
+            idBox.push(i)
+            neighbor(i)
         }
     }
+    for (let i = 0; i < idBox.length; i++) {
+        nextPosition(idBox[i])
+    }
+    
 }
 
 function changeColor(element){
@@ -42,31 +43,46 @@ function changeColor(element){
 
     //console.log(cellArray)
 
-    neighbor(id)
+    //neighbor(id)
 }
 
 function neighbor(index) {
     id = parseInt(index)
-    //vizinhos superiores
-    document.getElementById(id-cellWidth).style.background = "#999"
-    document.getElementById(id-(cellWidth+1)).style.background = "#999"
-    document.getElementById(id-(cellWidth-1)).style.background = "#999"
-
+    document.getElementById(id).style.background = "brown"
+ 
+    //mudança de cor dos vizinhos superiores
+    document.getElementById(id-cellWidth).style.background = "purple"
+    document.getElementById(id-(cellWidth+1)).style.background = "purple"
+    document.getElementById(id-(cellWidth-1)).style.background = "purple"
+    
     //vizinhos laterais
-    document.getElementById(id-1).style.background = "#999"
-    document.getElementById(id+1).style.background = "#999"
+    document.getElementById(id-1).style.background = "purple"
+    document.getElementById(id+1).style.background = "purple"
+    
 
     //vizinhos inferiores
-    document.getElementById(id+cellWidth).style.background = "#999"
-    document.getElementById(id+(cellWidth+1)).style.background = "#999"
-    document.getElementById(id+(cellWidth-1)).style.background = "#999"
+    document.getElementById(id+cellWidth).style.background = "purple"
+    document.getElementById(id+(cellWidth+1)).style.background = "purple"
+    document.getElementById(id+(cellWidth-1)).style.background = "purple"
+
 }
 
-function nextPosition(index) {
-    id = parseInt(index)
+function nextPosition(index){
+    i = parseInt(index)
+
+    cellArray[i] = -1
+
+    cellArray[i-cellWidth] = 1
+    cellArray[i-(cellWidth+1)] = 1
+    cellArray[i-(cellWidth-1)] = 1
+
     
-    document.getElementById(id).style.background = "buttonface"
-    document.getElementById(id-cellWidth).style.background = "purple"
+    cellArray[i-1] = 1
+    cellArray[i+1] = 1
+
+    cellArray[i+cellWidth] = 1
+    cellArray[i+(cellWidth+1)] = 1
+    cellArray[i+(cellWidth-1)] = 1
 }
 
 function renderCells() {
